@@ -31,10 +31,46 @@
             background-color: #ccc;
             display: block;
         }
-        img {
+        .gallery {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            justify-content: space-between;
+        }
+        .gallery img {
+            width: calc(33.33% - 10px);
+            cursor: pointer;
+            transition: transform 0.3s ease;
+        }
+        .gallery img:hover {
+            transform: scale(1.05);
+        }
+        .image-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 500px;
-            margin: 10px 0;
+            height: 100%;
+            background-color: rgba(0, 0, 0, 0.8);
+            justify-content: center;
+            align-items: center;
+        }
+        .image-modal img {
+            width: 90%;
+            height: auto;
+            max-width: 1200px;
+        }
+        .image-modal.active {
+            display: flex;
+        }
+        .close-btn {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            font-size: 30px;
+            color: white;
+            cursor: pointer;
         }
     </style>
 </head>
@@ -50,31 +86,52 @@
 
     <div class="tab-content" id="content-0">
         <h2>Anime Celular</h2>
-        <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346154442092838954/Wallpapers_4k_para_Celular__Animes_e_Artwoks.jpg?ex=67c72785&is=67c5d605&hm=c13b0e73573249652fd5c39eab520c67ef0dbd8e2a63c5a44bf986125ac58677&" alt="Anime Celular">
+        <div class="gallery">
+            <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346154442092838954/Wallpapers_4k_para_Celular__Animes_e_Artwoks.jpg?ex=67c72785&is=67c5d605&hm=c13b0e73573249652fd5c39eab520c67ef0dbd8e2a63c5a44bf986125ac58677&" alt="Anime Celular📱" onclick="openModal(this)">
+            <img src="https://via.placeholder.com/500x300?text=Categoria+1" alt="Anime Celular" onclick="openModal(this)">
+            <!-- Adicione outras imagens aqui se necessário -->
+        </div>
     </div>
 
     <div class="tab-content" id="content-1">
-        <h2>Categoria 1</h2>
-        <!-- Adicione aqui a imagem da Categoria 1 -->
-        <img src="https://via.placeholder.com/500x300?text=Categoria+1" alt="Categoria 1">
+        <h2>Anime PC💻</h2>
+        <div class="gallery">
+            <img src="https://via.placeholder.com/500x300?text=Categoria+1" alt="Anime PC💻" onclick="openModal(this)">
+            <img src="https://via.placeholder.com/500x300?text=Categoria+1" alt="Anime PC💻" onclick="openModal(this)">
+            <img src="https://via.placeholder.com/500x300?text=Categoria+1" alt="Anime PC💻" onclick="openModal(this)">
+        </div>
     </div>
 
     <div class="tab-content" id="content-2">
         <h2>Categoria 2</h2>
-        <!-- Adicione aqui a imagem da Categoria 2 -->
-        <img src="https://via.placeholder.com/500x300?text=Categoria+2" alt="Categoria 2">
+        <div class="gallery">
+            <img src="https://via.placeholder.com/500x300?text=Categoria+2" alt="Categoria 2" onclick="openModal(this)">
+            <img src="https://via.placeholder.com/500x300?text=Categoria+2" alt="Categoria 2" onclick="openModal(this)">
+            <img src="https://via.placeholder.com/500x300?text=Categoria+2" alt="Categoria 2" onclick="openModal(this)">
+        </div>
     </div>
 
     <div class="tab-content" id="content-3">
         <h2>Categoria 3</h2>
-        <!-- Adicione aqui a imagem da Categoria 3 -->
-        <img src="https://via.placeholder.com/500x300?text=Categoria+3" alt="Categoria 3">
+        <div class="gallery">
+            <img src="https://via.placeholder.com/500x300?text=Categoria+3" alt="Categoria 3" onclick="openModal(this)">
+            <img src="https://via.placeholder.com/500x300?text=Categoria+3" alt="Categoria 3" onclick="openModal(this)">
+            <img src="https://via.placeholder.com/500x300?text=Categoria+3" alt="Categoria 3" onclick="openModal(this)">
+        </div>
     </div>
 
     <div class="tab-content" id="content-4">
-        <h2>Categoria 4</h2>
-        <!-- Adicione aqui a imagem da Categoria 4 -->
-        <img src="https://via.placeholder.com/500x300?text=Categoria+4" alt="Categoria 4">
+        <h2>Hentai🔞</h2>
+        <div class="gallery">
+            <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346161945954222141/images_6.jpg?ex=67c72e82&is=67c5dd02&hm=7605b5ad4e639aff9e5f2cb67fc36618418efe655d986af8fa77e1b439fe5212&" alt="Hentai🔞" onclick="openModal(this)">
+            <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346161953843712000/images_5.jpg?ex=67c72e84&is=67c5dd04&hm=a50991c541ea201b9114d8bc32446e7c439fa1cd9be3f3b708d285e3fa309b0c&" alt="Hentai🔞" onclick="openModal(this)">
+            <img src="https://via.placeholder.com/500x300?text=Categoria+4" alt="Hentai🔞" onclick="openModal(this)">
+        </div>
+    </div>
+
+    <div class="image-modal" id="image-modal">
+        <span class="close-btn" onclick="closeModal()">×</span>
+        <img id="modal-image" src="" alt="Imagem Ampliada">
     </div>
 
     <script>
@@ -93,8 +150,22 @@
 
         // Show the first tab by default
         showTab(0);
+
+        // Abrir o modal com a imagem ampliada
+        function openModal(img) {
+            const modal = document.getElementById('image-modal');
+            const modalImage = document.getElementById('modal-image');
+            modalImage.src = img.src;
+            modal.classList.add('active');
+        }
+
+        // Fechar o modal
+        function closeModal() {
+            const modal = document.getElementById('image-modal');
+            modal.classList.remove('active');
+        }
     </script>
 
 </body>
-            </html>
-            
+                </html>
+    
