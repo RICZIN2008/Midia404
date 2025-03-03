@@ -72,6 +72,21 @@
             color: white;
             cursor: pointer;
         }
+        .download-btn {
+            position: absolute;
+            bottom: 20px;
+            right: 20px;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            font-size: 18px;
+            border: none;
+            cursor: pointer;
+            display: none;
+        }
+        .download-btn:hover {
+            background-color: #45a049;
+        }
     </style>
 </head>
 <body>
@@ -89,7 +104,6 @@
         <div class="gallery">
             <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346154442092838954/Wallpapers_4k_para_Celular__Animes_e_Artwoks.jpg?ex=67c72785&is=67c5d605&hm=c13b0e73573249652fd5c39eab520c67ef0dbd8e2a63c5a44bf986125ac58677&" alt="Anime Celular📱" onclick="openModal(this)">
             <img src="https://via.placeholder.com/500x300?text=Categoria+1" alt="Anime Celular" onclick="openModal(this)">
-            <!-- Adicione outras imagens aqui se necessário -->
         </div>
     </div>
 
@@ -107,16 +121,12 @@
         <div class="gallery">
             <img src="https://cdn.discordapp.com/attachments/1346175430431997994/1346175520819253290/images_11.jpg?ex=67c73b26&is=67c5e9a6&hm=1caf05c7cfbc6df11d90cec5321223a005a77138de3cadfcf9e509d509696b8f&" alt="Meme🤪" onclick="openModal(this)">
             <img src="https://cdn.discordapp.com/attachments/1346175430431997994/1346175495431131257/images_13.jpg?ex=67c73b20&is=67c5e9a0&hm=dbb460ca0850c181bf7c45dfdef352bc259593b0b32894f46a675dc42d95fa65&" alt="Meme🤪" onclick="openModal(this)">
-            <img src="https://cdn.discordapp.com/attachments/1346175430431997994/1346175487432724572/images_14.jpg?ex=67c73b1e&is=67c5e99e&hm=34f2027ca78a0a92de5f67456e3f99e131b118ead3e50a2f250681fedb7fae81&" alt="Meme🤪" onclick="openModal(this)">
-            <img src="https://cdn.discordapp.com/attachments/1346175430431997994/1346175506860609566/images_10.jpg?ex=67c73b23&is=67c5e9a3&hm=2a647ee53ab427d313ae1a0dda98ba6eb03bf1f25df21159ec3e93c091f41920&" alt="Meme🤪" onclick="openModal(this)">
-            <img src="https://cdn.discordapp.com/attachments/1346175430431997994/1346175560874721280/images_9.jpg?ex=67c73b30&is=67c5e9b0&hm=62530e5790f40e235d94a0e55884fda891aa49e0929d11172a87ebb4c2c41239&" alt="Meme🤪" onclick="openModal(this)">                        
         </div>
     </div>
 
     <div class="tab-content" id="content-3">
         <h2>Categoria 3</h2>
         <div class="gallery">
-            <img src="https://via.placeholder.com/500x300?text=Categoria+3" alt="Categoria 3" onclick="openModal(this)">
             <img src="https://via.placeholder.com/500x300?text=Categoria+3" alt="Categoria 3" onclick="openModal(this)">
             <img src="https://via.placeholder.com/500x300?text=Categoria+3" alt="Categoria 3" onclick="openModal(this)">
         </div>
@@ -127,14 +137,13 @@
         <div class="gallery">
             <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346161945954222141/images_6.jpg?ex=67c72e82&is=67c5dd02&hm=7605b5ad4e639aff9e5f2cb67fc36618418efe655d986af8fa77e1b439fe5212&" alt="Hentai🔞" onclick="openModal(this)">
             <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346161953843712000/images_5.jpg?ex=67c72e84&is=67c5dd04&hm=a50991c541ea201b9114d8bc32446e7c439fa1cd9be3f3b708d285e3fa309b0c&" alt="Hentai🔞" onclick="openModal(this)">
-            <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346169569370312764/images_7.jpg?ex=67c7359b&is=67c5e41b&hm=ce3f35f3a79170b2d767fd3fbeed3fb5678b15799a43fb4dab00e1c39e56c52c&" alt="Hentai🔞" onclick="openModal(this)">
-            <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346169559521951806/images_8.jpg?ex=67c73599&is=67c5e419&hm=64039b3c618573c6d7f9f42ed9df2f3d23632cae54507671afafca61d67269e7&" alt="Hentai🔞" onclick="openModal(this)">
         </div>
     </div>
 
     <div class="image-modal" id="image-modal">
         <span class="close-btn" onclick="closeModal()">×</span>
         <img id="modal-image" src="" alt="Imagem Ampliada">
+        <a id="download-btn" class="download-btn" href="#" download>Baixar Imagem</a>
     </div>
 
     <script>
@@ -158,8 +167,12 @@
         function openModal(img) {
             const modal = document.getElementById('image-modal');
             const modalImage = document.getElementById('modal-image');
+            const downloadBtn = document.getElementById('download-btn');
+
             modalImage.src = img.src;
+            downloadBtn.href = img.src; // Configura o link para o download
             modal.classList.add('active');
+            downloadBtn.style.display = 'block'; // Mostra o botão de download
         }
 
         // Fechar o modal
@@ -170,5 +183,4 @@
     </script>
 
 </body>
-    </html>
-    
+</html>
