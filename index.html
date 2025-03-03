@@ -1,152 +1,100 @@
 <!DOCTYPE html>
-<html lang="pt">
+<html lang="pt-br">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Foto e Vídeo</title>
+    <title>Galeria de Imagens</title>
     <style>
         body {
-            background-color: black;
-            color: white;
-            text-align: center;
             font-family: Arial, sans-serif;
-            overflow: hidden;
         }
-        .container {
-            margin-top: 20px;
-            position: relative;
+        .tabs {
             display: flex;
-            justify-content: center;
-            align-items: center;
-            flex-direction: column;
-        }
-        .media-wrapper {
-            width: 90%;
-            max-width: 500px;
-            height: auto;
-            max-height: 350px;
-            position: relative;
-            display: none;
-            justify-content: center;
-            align-items: center;
-            overflow: hidden;
-            border-radius: 10px;
-            animation: borderColorChange 6s infinite linear;
-            border: 4px solid;
-        }
-        @keyframes borderColorChange {
-            0% { border-color: red; }
-            25% { border-color: blue; }
-            50% { border-color: purple; }
-            75% { border-color: pink; }
-            100% { border-color: red; }
-        }
-        img, video {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
             cursor: pointer;
-            background: black;
+            justify-content: space-around;
+            margin-bottom: 20px;
         }
-        .buttons {
-            margin-top: 20px;
-        }
-        button {
-            background-color: white;
-            color: black;
-            border: none;
-            padding: 10px 20px;
-            font-size: 16px;
-            cursor: pointer;
-            margin: 5px;
-            border-radius: 5px;
-        }
-        button:hover {
-            background-color: gray;
-        }
-        .close-btn {
-            display: none;
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background: red;
-            color: white;
-            border: none;
+        .tab {
             padding: 10px;
-            font-size: 18px;
-            cursor: pointer;
-            border-radius: 5px;
+            background-color: #f1f1f1;
+            border: 1px solid #ddd;
+            flex: 1;
+            text-align: center;
         }
-        .rotate-btn {
-            margin-top: 10px;
+        .tab:hover {
+            background-color: #ddd;
+        }
+        .tab-content {
+            display: none;
+        }
+        .active {
+            background-color: #ccc;
+            display: block;
+        }
+        img {
+            width: 100%;
+            max-width: 500px;
+            margin: 10px 0;
         }
     </style>
 </head>
 <body>
 
-    <h1>Minha Foto e Vídeo</h1>
-
-    <div class="buttons">
-        <button id="btnImage" onclick="showImage()">Mostrar Imagem</button>
-        <button id="btnVideo" onclick="showVideo()">Mostrar Vídeo</button>
-        <button id="btnRotate" class="rotate-btn" onclick="rotateScreen()">Girar Tela</button>
+    <div class="tabs">
+        <div class="tab" onclick="showTab(0)">Anime Celular</div>
+        <div class="tab" onclick="showTab(1)">Categoria 1</div>
+        <div class="tab" onclick="showTab(2)">Categoria 2</div>
+        <div class="tab" onclick="showTab(3)">Categoria 3</div>
+        <div class="tab" onclick="showTab(4)">Categoria 4</div>
     </div>
 
-    <div class="container">
-        <button id="closeBtn" class="close-btn" onclick="closeMedia()">✖</button>
+    <div class="tab-content" id="content-0">
+        <h2>Anime Celular</h2>
+        <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346154442092838954/Wallpapers_4k_para_Celular__Animes_e_Artwoks.jpg?ex=67c72785&is=67c5d605&hm=c13b0e73573249652fd5c39eab520c67ef0dbd8e2a63c5a44bf986125ac58677&" alt="Anime Celular">
+    </div>
 
-        <div id="imageWrapper" class="media-wrapper">
-            <img id="myImage" src="" alt="Imagem carregada">
-        </div>
+    <div class="tab-content" id="content-1">
+        <h2>Categoria 1</h2>
+        <!-- Adicione aqui a imagem da Categoria 1 -->
+        <img src="https://via.placeholder.com/500x300?text=Categoria+1" alt="Categoria 1">
+    </div>
 
-        <div id="videoWrapper" class="media-wrapper">
-            <video id="myVideo" controls playsinline>
-                <source id="videoSource" src="" type="video/mp4">
-                Seu navegador não suporta vídeos.
-            </video>
-        </div>
+    <div class="tab-content" id="content-2">
+        <h2>Categoria 2</h2>
+        <!-- Adicione aqui a imagem da Categoria 2 -->
+        <img src="https://via.placeholder.com/500x300?text=Categoria+2" alt="Categoria 2">
+    </div>
+
+    <div class="tab-content" id="content-3">
+        <h2>Categoria 3</h2>
+        <!-- Adicione aqui a imagem da Categoria 3 -->
+        <img src="https://via.placeholder.com/500x300?text=Categoria+3" alt="Categoria 3">
+    </div>
+
+    <div class="tab-content" id="content-4">
+        <h2>Categoria 4</h2>
+        <!-- Adicione aqui a imagem da Categoria 4 -->
+        <img src="https://via.placeholder.com/500x300?text=Categoria+4" alt="Categoria 4">
     </div>
 
     <script>
-        function showImage() {
-            const imageUrl = prompt("https://cdn.discordapp.com/attachments/1346154359951462573/1346154442092838954/Wallpapers_4k_para_Celular__Animes_e_Artwoks.jpg?ex=67c72785&is=67c5d605&hm=c13b0e73573249652fd5c39eab520c67ef0dbd8e2a63c5a44bf986125ac58677&");
-            if (imageUrl) {
-                document.getElementById("myImage").src = imageUrl;
-                document.getElementById("imageWrapper").style.display = "flex";
-                document.getElementById("videoWrapper").style.display = "none";
-                document.getElementById("btnVideo").style.display = "none";
-                document.getElementById("closeBtn").style.display = "block";
-            }
+        function showTab(index) {
+            const contents = document.querySelectorAll('.tab-content');
+            const tabs = document.querySelectorAll('.tab');
+            
+            contents.forEach((content, i) => {
+                content.classList.remove('active');
+                tabs[i].classList.remove('active');
+            });
+
+            contents[index].classList.add('active');
+            tabs[index].classList.add('active');
         }
 
-        function showVideo() {
-            const videoUrl = prompt("Digite o link do vídeo:");
-            if (videoUrl) {
-                document.getElementById("videoSource").src = videoUrl;
-                document.getElementById("myVideo").load();
-                document.getElementById("videoWrapper").style.display = "flex";
-                document.getElementById("imageWrapper").style.display = "none";
-                document.getElementById("btnImage").style.display = "none";
-                document.getElementById("closeBtn").style.display = "block";
-            }
-        }
-
-        function closeMedia() {
-            document.getElementById("imageWrapper").style.display = "none";
-            document.getElementById("videoWrapper").style.display = "none";
-            document.getElementById("btnImage").style.display = "inline-block";
-            document.getElementById("btnVideo").style.display = "inline-block";
-            document.getElementById("closeBtn").style.display = "none";
-        }
-
-        function rotateScreen() {
-            if (screen.orientation.type.startsWith("portrait")) {
-                screen.orientation.lock("landscape");
-            } else {
-                screen.orientation.lock("portrait");
-            }
-        }
+        // Show the first tab by default
+        showTab(0);
     </script>
 
 </body>
-</html>
+            </html>
+            
