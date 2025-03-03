@@ -10,6 +10,7 @@
             color: white;
             text-align: center;
             font-family: Arial, sans-serif;
+            overflow: hidden;
         }
         .container {
             margin-top: 20px;
@@ -20,16 +21,18 @@
             flex-direction: column;
         }
         .media-wrapper {
-            width: 600px;
-            height: 400px;
+            width: 90%;
+            max-width: 500px;
+            height: auto;
+            max-height: 350px;
             position: relative;
-            display: none; /* Oculto por padrão */
+            display: none;
             justify-content: center;
             align-items: center;
             overflow: hidden;
             border-radius: 10px;
-            animation: borderColorChange 3s infinite linear;
-            border: 8px solid;
+            animation: borderColorChange 6s infinite linear;
+            border: 4px solid;
         }
         @keyframes borderColorChange {
             0% { border-color: red; }
@@ -41,8 +44,9 @@
         img, video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: contain;
             cursor: pointer;
+            background: black;
         }
         .buttons {
             margin-top: 20px;
@@ -55,6 +59,7 @@
             font-size: 16px;
             cursor: pointer;
             margin: 5px;
+            border-radius: 5px;
         }
         button:hover {
             background-color: gray;
@@ -72,6 +77,9 @@
             cursor: pointer;
             border-radius: 5px;
         }
+        .rotate-btn {
+            margin-top: 10px;
+        }
     </style>
 </head>
 <body>
@@ -81,18 +89,19 @@
     <div class="buttons">
         <button id="btnImage" onclick="showImage()">Mostrar Imagem</button>
         <button id="btnVideo" onclick="showVideo()">Mostrar Vídeo</button>
+        <button id="btnRotate" class="rotate-btn" onclick="rotateScreen()">Girar Tela</button>
     </div>
 
     <div class="container">
         <button id="closeBtn" class="close-btn" onclick="closeMedia()">✖</button>
 
         <div id="imageWrapper" class="media-wrapper">
-            <img id="myImage" src="https://images.app.goo.gl/TJBKWHjHqNV1uuUK8" alt="Minha Foto" loading="lazy">
+            <img id="myImage" src="" alt="Imagem carregada">
         </div>
 
         <div id="videoWrapper" class="media-wrapper">
-            <video id="myVideo" controls preload="metadata" playsinline>
-                <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
+            <video id="myVideo" controls playsinline>
+                <source id="videoSource" src="" type="video/mp4">
                 Seu navegador não suporta vídeos.
             </video>
         </div>
@@ -100,25 +109,42 @@
 
     <script>
         function showImage() {
-            document.getElementById("imageWrapper").style.display = "flex";
-            document.getElementById("videoWrapper").style.display = "none";
-            document.getElementById("btnVideo").style.display = "none"; // Oculta o botão de vídeo
-            document.getElementById("closeBtn").style.display = "block"; // Mostra o botão "X"
+            const imageUrl = prompt("Digite o link da imagem:");
+            if (imageUrl) {
+                document.getElementById("myImage").src = imageUrl;
+                document.getElementById("imageWrapper").style.display = "flex";
+                document.getElementById("videoWrapper").style.display = "none";
+                document.getElementById("btnVideo").style.display = "none";
+                document.getElementById("closeBtn").style.display = "block";
+            }
         }
 
         function showVideo() {
-            document.getElementById("videoWrapper").style.display = "flex";
-            document.getElementById("imageWrapper").style.display = "none";
-            document.getElementById("btnImage").style.display = "none"; // Oculta o botão de imagem
-            document.getElementById("closeBtn").style.display = "block"; // Mostra o botão "X"
+            const videoUrl = prompt("Digite o link do vídeo:");
+            if (videoUrl) {
+                document.getElementById("videoSource").src = videoUrl;
+                document.getElementById("myVideo").load();
+                document.getElementById("videoWrapper").style.display = "flex";
+                document.getElementById("imageWrapper").style.display = "none";
+                document.getElementById("btnImage").style.display = "none";
+                document.getElementById("closeBtn").style.display = "block";
+            }
         }
 
         function closeMedia() {
             document.getElementById("imageWrapper").style.display = "none";
             document.getElementById("videoWrapper").style.display = "none";
-            document.getElementById("btnImage").style.display = "inline-block"; // Mostra o botão de imagem novamente
-            document.getElementById("btnVideo").style.display = "inline-block"; // Mostra o botão de vídeo novamente
-            document.getElementById("closeBtn").style.display = "none"; // Oculta o botão "X"
+            document.getElementById("btnImage").style.display = "inline-block";
+            document.getElementById("btnVideo").style.display = "inline-block";
+            document.getElementById("closeBtn").style.display = "none";
+        }
+
+        function rotateScreen() {
+            if (screen.orientation.type.startsWith("portrait")) {
+                screen.orientation.lock("landscape");
+            } else {
+                screen.orientation.lock("portrait");
+            }
         }
     </script>
 
