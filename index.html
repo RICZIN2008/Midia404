@@ -100,7 +100,7 @@
     <div class="tab-content" id="content-0">
         <h2>Anime Celular📱</h2>
         <div class="gallery">
-            <img src="https://cdn.discordapp.com/attachments/1346175430431997994/1346175520819253290/images_11.jpg?ex=67c73b26&is=67c5e9a6&hm=1caf05c7cfbc6df11d90cec5321223a005a77138de3cadfcf9e509d509696b8f&" alt="Anime Celular" onclick="openModal(this)">
+            <img src="https://cdn.discordapp.com/attachments/1346175430431997994/1346175520819253290/images_11.jpg" alt="Anime Celular" onclick="openModal(this)">
             <img src="https://via.placeholder.com/500x300?text=Anime+Celular+2" alt="Anime Celular 2" onclick="openModal(this)">
         </div>
     </div>
@@ -130,7 +130,7 @@
     <div class="tab-content" id="content-4">
         <h2>Hentai🔞</h2>
         <div class="gallery">
-            <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346161945954222141/images_6.jpg?ex=67c72e82&is=67c5dd02&hm=7605b5ad4e639aff9e5f2cb67fc36618418efe655d986af8fa77e1b439fe5212&" alt="Hentai" onclick="openModal(this)">
+            <img src="https://cdn.discordapp.com/attachments/1346154359951462573/1346161945954222141/images_6.jpg" alt="Hentai" onclick="openModal(this)">
         </div>
     </div>
 
@@ -154,7 +154,6 @@
             tabs[index].classList.add('active');
         }
 
-        // Exibir a primeira aba por padrão
         showTab(0);
 
         let currentImageSrc = '';
@@ -163,7 +162,7 @@
             const modal = document.getElementById('image-modal');
             const modalImage = document.getElementById('modal-image');
 
-            currentImageSrc = img.src; // Armazena o caminho da imagem
+            currentImageSrc = img.src; 
             modalImage.src = img.src;
             modal.classList.add('active');
         }
@@ -174,15 +173,26 @@
         }
 
         function downloadImage() {
-            const link = document.createElement('a');
-            link.href = currentImageSrc;
-            link.download = 'imagem.jpg'; // Nome do arquivo a ser baixado
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
+            if (!currentImageSrc) {
+                alert("Erro ao encontrar a imagem.");
+                return;
+            }
+
+            fetch(currentImageSrc)
+                .then(response => response.blob())
+                .then(blob => {
+                    const link = document.createElement('a');
+                    link.href = URL.createObjectURL(blob);
+                    link.download = currentImageSrc.split('/').pop(); 
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                })
+                .catch(error => console.error("Erro ao baixar a imagem:", error));
         }
     </script>
 
 </body>
-            </html>
-        
+    </html>
+    
