@@ -151,7 +151,7 @@
         <span class="close-btn" onclick="closeModal()">×</span>
         <div class="modal-content">
             <img id="modal-image" src="" alt="Imagem Ampliada">
-            <a id="download-btn" class="download-btn" href="#" download>Baixar Imagem</a>
+            <button id="download-btn" class="download-btn" onclick="downloadImage()">Baixar Imagem</button>
         </div>
     </div>
 
@@ -179,7 +179,6 @@
             const downloadBtn = document.getElementById('download-btn');
 
             modalImage.src = img.src;
-            downloadBtn.href = img.src; // Configura o link para o download
             modal.classList.add('active');
             downloadBtn.style.display = 'block'; // Mostra o botão de download
         }
@@ -188,6 +187,15 @@
         function closeModal() {
             const modal = document.getElementById('image-modal');
             modal.classList.remove('active');
+        }
+
+        // Função de download
+        function downloadImage() {
+            const modalImage = document.getElementById('modal-image');
+            const a = document.createElement('a');
+            a.href = modalImage.src;
+            a.download = modalImage.src.split('/').pop(); // Extrai o nome do arquivo da URL
+            a.click(); // Aciona o download
         }
     </script>
 
